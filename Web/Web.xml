@@ -9,7 +9,7 @@
             测试控制器
             </summary>
         </member>
-        <member name="M:Web.Controllers.FirstController.#ctor(Infrastructure.Models.ApiDBContent)">
+        <member name="M:Web.Controllers.FirstController.#ctor(EFCore.Models.Models.ApiDBContent,Application.UserService)">
             <summary>
             测试
             </summary>
@@ -21,7 +21,19 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Web.Controllers.FirstController.Post(Infrastructure.Models.BaseUser)">
+        <member name="M:Web.Controllers.FirstController.DapperGet">
+            <summary>
+            获取测试数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Controllers.FirstController.GetRead">
+            <summary>
+            获取测试数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Controllers.FirstController.Post(EFCore.Models.Models.BaseUser)">
             <summary>
             新增
             </summary>
@@ -35,6 +47,51 @@
             <summary>
             删除
             </summary>
+        </member>
+        <member name="T:Web.Controllers.GoodTypeController">
+            <summary>
+            物品分类操作接口
+            </summary>
+        </member>
+        <member name="M:Web.Controllers.GoodTypeController.#ctor(EFCore.Models.Models.ApiDBContent,Application.GoodsTypeService)">
+            <summary>
+            测试
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:Web.Controllers.GoodTypeController.Get(System.Int32)">
+            <summary>
+            获取物品分类信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Controllers.GoodTypeController.Post(EFCore.Models.Models.GoodsType)">
+            <summary>
+            新增物品分类
+            </summary>
+            <param name="goodsType"></param>
+        </member>
+        <member name="M:Web.Controllers.RedisController.BatchPutEqidAndProfileIds(System.Collections.Generic.List{EFCore.Models.Models.BaseUser})">
+            <summary>
+            发布redis消息队列
+            </summary>
+            <param name="eqidPairs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Controllers.RedisController.GetSessionData(System.String)">
+            <summary>
+            测试redisseesion
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Web.Controllers.RedisController.GetSetDataTest(System.String)">
+            <summary>
+            测试redis缓存
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

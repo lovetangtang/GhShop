@@ -1,32 +1,20 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Options;
 
 namespace EFCore.Models.Models
 {
-    public partial class ApiDBContent : DbContext
+    public partial class GhShopContext : DbContext
     {
-        private DBConnectionOption _readAndWrite = null;
-
-        public ApiDBContent(IOptionsMonitor<DBConnectionOption> options)
+        public GhShopContext()
         {
-            this._readAndWrite = options.CurrentValue;
         }
 
-        private static int _iSeed = 0;//应该long
-        public ApiDBContent ToRead()
+        public GhShopContext(DbContextOptions<GhShopContext> options)
+            : base(options)
         {
-            //int num = new Random(_iSeed++).Next(0, this._readAndWrite.ReadConnectionList.Count);
-            this.Database.GetDbConnection().ConnectionString = this._readAndWrite.ReadConnectionList[_iSeed++ % this._readAndWrite.ReadConnectionList.Count];//轮询
-            //其实可以加入负载均衡策略---
-            return this;
         }
-        public ApiDBContent ToWrite()
-        {
-            this.Database.GetDbConnection().ConnectionString = this._readAndWrite.WriteConnection;
-            return this;
-        }
+
         public virtual DbSet<BaseLeave> BaseLeave { get; set; }
         public virtual DbSet<BaseUser> BaseUser { get; set; }
         public virtual DbSet<GoodsInfo> GoodsInfo { get; set; }
@@ -34,12 +22,14 @@ namespace EFCore.Models.Models
         public virtual DbSet<GoodsRecommend> GoodsRecommend { get; set; }
         public virtual DbSet<GoodsType> GoodsType { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(this._readAndWrite.WriteConnection);
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=.\\SQL2019;Initial Catalog=GhShop;User ID=sa;Password=123456");
+            }
         }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

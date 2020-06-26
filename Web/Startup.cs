@@ -55,7 +55,7 @@ namespace Web
                 // 获取xml文件路径
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 // 添加控制器层注释，true表示显示控制器注释
-                //options.IncludeXmlComments(xmlPath, true);
+                options.IncludeXmlComments(xmlPath, true);
 
 
                 #region Jwt
