@@ -29,23 +29,16 @@ namespace Web.Controllers
             _dbContext = dbContext;
             _goodsTypeService = goodsTypeService;
         }
+        /// <summary>
+        /// 获取物品分类数据
+        /// </summary>
+        /// <param name="rank">0:主分类；1：子分类</param>
+        /// <returns></returns>
         // GET: api/<GoodTypeController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<GoodsType> Get(int rank)
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        /// <summary>
-        /// 获取物品分类信息
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        // GET api/<GoodTypeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            return _dbContext.GoodsType.Where(e => e.Rank == rank).ToList();
         }
 
         /// <summary>
@@ -56,19 +49,33 @@ namespace Web.Controllers
         [HttpPost]
         public async Task Post([FromBody] GoodsType goodsType)
         {
-             await _goodsTypeService.AddGoodsType(goodsType);
+            await _goodsTypeService.AddGoodsType(goodsType);
         }
 
+        /// <summary>
+        /// 修改物品分类信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="goodsType"></param>
         // PUT api/<GoodTypeController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task Put(int id, [FromBody] GoodsType goodsType)
         {
+            _dbContext.GoodsType.Update(goodsType);
+            await _dbContext.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// 删除物品分类信息
+        /// </summary>
+        /// <param name="id"></param>
         // DELETE api/<GoodTypeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
+            var GoodsType = _dbContext.GoodsType.Find(id);
+            _dbContext.GoodsType.Remove(GoodsType);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
